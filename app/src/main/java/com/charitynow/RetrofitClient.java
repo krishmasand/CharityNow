@@ -4,7 +4,7 @@ package com.charitynow;
 import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
-
+import com.firebase.client.Firebase;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -69,6 +69,8 @@ public class RetrofitClient {
                         Log.d(TAG, Data.places.get(i).name);
                     }
 
+                    Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
+                    firebase.child("checkedInPlace").setValue(Data.places.get(0));
 //                    for(JsonElement jsonElement1 : mFlowArrayList){
 //                        Log.d(TAG, jsonElement1.toString());
 //                    }
