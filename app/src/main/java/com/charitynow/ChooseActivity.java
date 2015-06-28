@@ -7,17 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
 
 public class ChooseActivity extends AppCompatActivity {
     RetrofitClient mRC;
-
+    EditText mET;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
+        mET = (EditText) findViewById(R.id.editText);
        // Firebase.setAndroidContext(this);
     }
 
@@ -44,7 +47,13 @@ public class ChooseActivity extends AppCompatActivity {
     }
 
     public void startOrganizationActivity(View view){
-        startActivity(new Intent(getApplicationContext(), PlacesListActivity.class));
+        if(mET.getText().toString().equals("")){
+            Toast.makeText(this, "Please enter an organization name", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Data.companyName = mET.getText().toString();
+            startActivity(new Intent(getApplicationContext(), PlacesListActivity.class));
+        }
     }
 
     public void startUserActivity(View view){
