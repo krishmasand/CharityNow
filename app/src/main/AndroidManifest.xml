@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.charitynow" >
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -25,7 +26,6 @@
             android:name=".OrganizationListActivity"
             android:label="@string/title_activity_organization_list" >
         </activity>
-        <uses-permission android:name="android.permission.INTERNET" />
     </application>
 
 </manifest>
