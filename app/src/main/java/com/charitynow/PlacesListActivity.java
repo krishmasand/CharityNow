@@ -36,16 +36,6 @@ public class PlacesListActivity extends ActionBarActivity {
             placesStrings[i] = Data.places.get(i).name;
         }
 
-//        if(placesStrings.length <= 0){
-//            title = (TextView) findViewById(R.id.textView);
-//            if(bluetoothAdapter == null) title.setText("Bluetooth is not available");
-//            else if(!bluetoothAdapter.isEnabled()) title.setText("Bluetooth is not enabled");
-//            else title.setText("No Bluetooth Devices Found");
-//        }
-//        else{
-//            title = (TextView) findViewById(R.id.textView);
-//            title.setText("Devices");
-//        }
         Arrays.sort(placesStrings);
         adapter = new PlacesCustomAdapter(this, placesStrings);
         lv.setAdapter(adapter);

@@ -7,8 +7,8 @@ import com.charitynow.Place;
 public class Company
 {
 
-    private String name;
-    private Place checkedInPlace;
+    public String name;
+    public Place checkedInPlace;
 
     public Company(String name, Place checkedInPlace)
     {

@@ -2,16 +2,41 @@ package com.charitynow;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import com.firebase.client.Firebase;
+
+import java.util.Arrays;
 
 
-public class OrganizationListActivity extends ActionBarActivity {
+public class OrganizationListActivity extends AppCompatActivity {
+    OrganizationCustomAdapter adapter;
+    ListView lv;
+    RetrofitClient mRC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organization_list);
+        lv = (ListView) findViewById(R.id.listView2);
+        mRC = new RetrofitClient();
+        //mRC.getPlaces(this);
+        Firebase.setAndroidContext(this);
+    }
+
+    public void setupLV(){
+
+        String[] companiesStrings = new String[Data.companies.size()];
+        for(int i = 0; i < companiesStrings.length; i++){
+            companiesStrings[i] = Data.companies.get(i).name;
+        }
+
+        Arrays.sort(companiesStrings);
+        adapter = new OrganizationCustomAdapter(this, companiesStrings);
+        lv.setAdapter(adapter);
     }
 
     @Override
