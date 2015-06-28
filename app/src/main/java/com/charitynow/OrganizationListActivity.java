@@ -41,11 +41,19 @@ public class OrganizationListActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 Map<String, Object> value = (Map<String, Object>) snapshot.getValue();
-                System.out.println(snapshot.getKey() + " was " + value.get("name"));
+                boolean add = true;
                 try {
-                    Data.companies.add(new Company(snapshot.getKey(), new Place((String) value.get("name"),
+                    Company newComp = new Company(snapshot.getKey(), new Place((String) value.get("name"),
                             Float.parseFloat(value.get("lat").toString()),
-                            Float.parseFloat(value.get("lon").toString()))));
+                            Float.parseFloat(value.get("lon").toString()),
+                            Integer.parseInt(value.get("trafficScore").toString())));
+                    for(Company c : Data.companies){
+                        if (c.name.equals(newComp.name)){
+                            add = false;
+                            break;
+                        }
+                    }
+                    if(add) Data.companies.add(newComp);
                 }
                 catch(Exception e){}
                 setupLV();

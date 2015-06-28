@@ -8,7 +8,11 @@ import android.widget.ListView;
 
 import com.firebase.client.Firebase;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 
 public class PlacesListActivity extends ActionBarActivity {
@@ -30,14 +34,19 @@ public class PlacesListActivity extends ActionBarActivity {
     }
 
     public void setupLV(){
-        
+
+        Collections.sort(Data.places, new CustomComparator());
+
         String[] placesStrings = new String[Data.places.size()];
         for(int i = 0; i < placesStrings.length; i++){
             placesStrings[i] = Data.places.get(i).name;
         }
 
-        Arrays.sort(placesStrings);
-        adapter = new PlacesCustomAdapter(this, placesStrings);
+        int [] trafficScores = new int[Data.places.size()];
+        for(int i = 0; i < placesStrings.length; i++){
+            trafficScores[i] = Data.places.get(i).trafficScore;
+        }
+        adapter = new PlacesCustomAdapter(this, placesStrings, trafficScores);
         lv.setAdapter(adapter);
     }
 
@@ -62,4 +71,15 @@ public class PlacesListActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class CustomComparator implements Comparator<Place> {
+        @Override
+        public int compare(Place o1, Place o2) {
+            if( o1.trafficScore < o2.trafficScore) return 1;
+            else if( o1.trafficScore == o2.trafficScore) return 0;
+            else return -1;
+        }
+    }
 }
+
+

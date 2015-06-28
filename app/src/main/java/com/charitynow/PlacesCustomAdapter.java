@@ -41,16 +41,18 @@ public class PlacesCustomAdapter extends ArrayAdapter<String>{
     private static String TAG = "PlacesCustomAdapter";
     SharedPreferences sharedPreferences;
     String[] strings = null;
+    int[] trafficScores = null;
     //        BroadcastReceiver[] removeReceivers;
     String currentString;
     Context context;
     ViewGroup p;
     Place place;
 
-    public PlacesCustomAdapter(Context context, String[] resource) {
+    public PlacesCustomAdapter(Context context, String[] resource, int[] tS) {
         super(context,R.layout.row,resource);
         this.context = context;
         this.strings = resource;
+        trafficScores = tS;
 //            removeReceivers = new BroadcastReceiver[resource.length];
         //unregister();
     }
@@ -106,6 +108,9 @@ public class PlacesCustomAdapter extends ArrayAdapter<String>{
                         Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
                         firebase.child(Data.companyName).setValue(place);
                         dialog.cancel();
+                        SetValue("checkedIn", strings[position]);
+                        PlacesListActivity PLA = (PlacesListActivity) context;
+                        PLA.setupLV();
                     }
                 });
                 dialog.show();
@@ -123,14 +128,34 @@ public class PlacesCustomAdapter extends ArrayAdapter<String>{
         relativeLayout.setOnLongClickListener(longPressed);
         name.setText(strings[position]);
         currentString = strings[position];
-
-        iv.setImageResource(R.mipmap.sleeping);
-        sub.setText("Not Monitoring");
-        relativeLayout.setBackgroundColor(Color.WHITE);
-        name.setTextColor(Color.BLACK);
-        sub.setTextColor(Color.BLACK);
+        if(LoadValue("checkedIn").equals(currentString)) {
+            iv.setImageResource(R.mipmap.thumbsup);
+            sub.setText("Checked In");
+            relativeLayout.setBackgroundColor(Color.parseColor("#8fa5fc"));
+            name.setTextColor(Color.WHITE);
+            sub.setTextColor(Color.WHITE);
+        }
+        else {
+            iv.setImageResource(R.mipmap.sleeping);
+            sub.setText("Traffic Score: " + trafficScores[position]);
+            relativeLayout.setBackgroundColor(Color.WHITE);
+            name.setTextColor(Color.BLACK);
+            sub.setTextColor(Color.BLACK);
+        }
 
         return convertView;
+    }
+
+    public void SetValue(String s, String s2){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(s, s2);
+        editor.commit();
+    }
+
+    public String LoadValue(String s){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(s, "");
     }
 
 

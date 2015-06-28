@@ -72,10 +72,19 @@ public class RetrofitClient {
                 int trafficScore = jsonElement.getAsJsonObject().get("RWS").getAsJsonArray().get(0).getAsJsonObject().get("RW").getAsJsonArray().get(0)
                         .getAsJsonObject().get("FIS").getAsJsonArray().get(0).getAsJsonObject().get("FI").getAsJsonArray().get(0).getAsJsonObject()
                         .get("TMC").getAsJsonObject().get("PC").getAsInt();
+                mTrafficScores.add(trafficScore);
                 if(mFlowArrayList.size() == mLocations.size())
                 {
                     for(int i = 0; i < mPlaceStrings.size(); i++){
-                        Data.places.add(new Place(mPlaceStrings.get(i), mLocations.get(i).first, mLocations.get(i).second));
+                        boolean add = true;
+                        Place newPlace = new Place(mPlaceStrings.get(i), mLocations.get(i).first, mLocations.get(i).second, mTrafficScores.get(i));
+                        for(Place p : Data.places){
+                            if (p.name.equals(newPlace.name)){
+                                add = false;
+                                break;
+                            }
+                        }
+                        if(add) Data.places.add(newPlace);
                         Log.d(TAG, Data.places.get(i).name);
                     }
 
