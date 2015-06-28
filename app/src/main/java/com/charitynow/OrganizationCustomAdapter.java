@@ -98,10 +98,14 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
                     }
                 });
                 Button checkInButton = (Button) dialog.findViewById(R.id.button4);
+                final EditText eT = (EditText) dialog.findViewById(R.id.editText2);
+
                 checkInButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SendEmailASyncTask aSyncTask = new SendEmailASyncTask(context);
+                        String amount = "5";
+                        if(eT.getText().toString()!="") amount = eT.getText().toString();
+                        SendEmailASyncTask aSyncTask = new SendEmailASyncTask(context, amount);
                         aSyncTask.execute();
                         dialog.cancel();
                     }

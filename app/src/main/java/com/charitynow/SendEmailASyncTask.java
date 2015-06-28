@@ -22,9 +22,11 @@ public class SendEmailASyncTask extends AsyncTask<Void, Void, Void> {
 
     public Context context;
     private String msgResponse;
+    private String amount;
 
-    public SendEmailASyncTask(Context context) {
+    public SendEmailASyncTask(Context context, String amount) {
         this.context = context;
+        this.amount = amount;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class SendEmailASyncTask extends AsyncTask<Void, Void, Void> {
                     "\n" +
                     "<p style=\"color: rgb(34, 34, 34); font-family: proxima-nova, Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20.7999992370605px;\"><span style=\"font-size:14px;\">We found that the charity of your choice has a Venmo account that you can use to donate to. Use the below link to donate the amount of your choice.</span></p>\n" +
                     "\n" +
-                    "<p style=\"color: rgb(34, 34, 34); font-family: proxima-nova, Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20.7999992370605px;\"><span style=\"font-size:14px;\">https://venmo.com/?txn=pay&amp;recipients=malarianomore&amp;amount=0.5&amp;note=for%20charity&amp;audience=public</span></p>\n" +
+                    "<p style=\"color: rgb(34, 34, 34); font-family: proxima-nova, Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20.7999992370605px;\"><span style=\"font-size:14px;\">https://venmo.com/?txn=pay&amp;recipients=malarianomore&amp;amount="+amount+"&amp;note=for%20charity&amp;audience=public</span></p>\n" +
                     "\n" +
                     "<p style=\"color: rgb(34, 34, 34); font-family: proxima-nova, Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20.7999992370605px;\">&nbsp;</p>\n" +
                     "\n" +
