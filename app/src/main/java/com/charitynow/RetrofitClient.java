@@ -1,11 +1,8 @@
 package com.charitynow;
 
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -13,13 +10,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-
-import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.UUID;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -31,18 +23,32 @@ import javax.net.ssl.X509TrustManager;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
-import retrofit.mime.TypedFile;
 
 public class RetrofitClient {
     private static final String TAG = RetrofitClient.class.getSimpleName();
 
     //creating a service for adapter with our GET class
-    String API = "apiendpoint.com/";
-    //public static String token = "Token 547bc40f9e77c7a4e906e5072bd8a71d8426dd57"; //Adam's
-    public static String token = "Token something"; //Krish's
-    RestAdapter mRestAdapter = new RestAdapter.Builder().setEndpoint(API).build();
+    String PlacesAPI = "https://places.demo.api.here.com/places/v1";
+    public static String token = "Token AJKnXv84fjrb0KIHawS0Tg";
+    RestAdapter mRestAdapter = new RestAdapter.Builder().setEndpoint(PlacesAPI).build();
     PlacesAPI mPlacesAPI = mRestAdapter.create(PlacesAPI.class);
+
+    public void getPlaces(){
+        disableSSLCertificateChecking();
+
+            try{
+                JsonElement places = mPlacesAPI.places("52.5159,13.3777", "sights-museums", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg");
+                Log.d(TAG, "Retrieved places from server");
+                Log.d(TAG, places.toString());
+
+            }
+            catch(RetrofitError error) {
+                Log.e(TAG, "Failed to retrieve devices from server");
+                Log.e(TAG, error.toString());
+            }
+
+
+    }
 
     public void postLogin(String username, String password, Callback<JsonElement> response){
         disableSSLCertificateChecking();

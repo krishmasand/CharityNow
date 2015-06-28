@@ -3,17 +3,21 @@ package com.charitynow;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 
-public class ChooseActivity extends ActionBarActivity {
+public class ChooseActivity extends AppCompatActivity {
+    RetrofitClient mRC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
+        mRC = new RetrofitClient();
+        mRC.getPlaces();
     }
 
     @Override

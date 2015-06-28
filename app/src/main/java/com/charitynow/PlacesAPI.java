@@ -24,6 +24,10 @@ interface PlacesAPI {
     final String token = "Token insert token here";
 
     @FormUrlEncoded
+    @GET("/discover/explore")
+    JsonElement places(@Field("at") String at, @Field("cat") String cat, @Field("app_id") String app_id, @Field("app_code") String app_code);
+
+    @FormUrlEncoded
     @POST("/login/")
     void login(@Field("username") String username, @Field("password") String password, Callback<JsonElement> response);
 
