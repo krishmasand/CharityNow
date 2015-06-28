@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,16 +32,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import java.util.HashSet;
 
 public class CustomAdapter extends ArrayAdapter<String>{
     static Toast toast;
+    private static String TAG = "CustomAdapter";
     SharedPreferences sharedPreferences;
     String[] strings = null;
     //        BroadcastReceiver[] removeReceivers;
     String currentString;
     Context context;
     ViewGroup p;
+    Place place;
 
     public CustomAdapter(Context context, String[] resource) {
         super(context,R.layout.row,resource);
@@ -51,23 +57,49 @@ public class CustomAdapter extends ArrayAdapter<String>{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        p = parent;
+
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         convertView = inflater.inflate(R.layout.row, parent, false);
         final RelativeLayout relativeLayout = (RelativeLayout) convertView.findViewById(R.id.relative);
         final TextView name = (TextView) convertView.findViewById(R.id.textView1);
         final TextView sub = (TextView) convertView.findViewById(R.id.list_subtitle);
         final ImageView iv = (ImageView) convertView.findViewById(R.id.imageView1);
+        p = parent;
+
 
 
         View.OnClickListener pressed= new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new Dialog(context);
+
+                final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.place_dialog);
 
                 dialog.setCancelable(true);
                 dialog.setTitle(strings[position]);
+                place = Data.places.get(position);
+                Button dirButton = (Button) dialog.findViewById(R.id.button3);
+                dirButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+//                        Uri gmmIntentUri = Uri.parse("google.navigation:q="+place.lat+","+place.lon);
+                        Uri gmmIntentUri = Uri.parse("google.navigation:q="+strings[position]);
+                        //Uri gmmIntentUri = Uri.parse("google.navigation:q="+Data.places.get(position).name);
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        context.startActivity(mapIntent);
+                    }
+                });
+                Button checkInButton = (Button) dialog.findViewById(R.id.button4);
+                checkInButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
+                        firebase.child("checkedInPlace").setValue(Data.places.get(position));
+                        dialog.cancel();
+                    }
+                });
                 dialog.show();
 
             }

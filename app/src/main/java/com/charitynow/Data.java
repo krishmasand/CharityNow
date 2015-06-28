@@ -8,5 +8,6 @@ import java.util.ArrayList;
 public class Data {
     public static ArrayList<Place> places = new ArrayList<Place>();
     public static ArrayList<Company> companies = new ArrayList<Company>();
+    public static String companyName = "Krish";
 
 }

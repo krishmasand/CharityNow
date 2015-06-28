@@ -114,11 +114,13 @@ public class RetrofitClient {
                     if(placesArray!=null) {
                         for (JsonElement item: placesArray) {
                             JsonObject itemObj = item.getAsJsonObject();
+                            Log.d(TAG, item.toString());
                             String title = itemObj.get("title").getAsString();
                             mPlaceStrings.add(title);
                             JsonArray posArray = itemObj.getAsJsonArray("position");
                             float lat = posArray.get(0).getAsFloat();
                             float lon = posArray.get(1).getAsFloat();
+                            Log.d(TAG, lat + "," + lon);
                             mLocations.add(new Pair(lat, lon));
 
                         }
