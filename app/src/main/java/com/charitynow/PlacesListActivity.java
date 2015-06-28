@@ -1,25 +1,18 @@
 package com.charitynow;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 
 
 public class PlacesListActivity extends ActionBarActivity {
-    CustomAdapter adapter;
+    PlacesCustomAdapter adapter;
     ListView lv;
     RetrofitClient mRC;
 
@@ -54,7 +47,7 @@ public class PlacesListActivity extends ActionBarActivity {
 //            title.setText("Devices");
 //        }
         Arrays.sort(placesStrings);
-        adapter = new CustomAdapter(this, placesStrings);
+        adapter = new PlacesCustomAdapter(this, placesStrings);
         lv.setAdapter(adapter);
     }
 

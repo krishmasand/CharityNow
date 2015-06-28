@@ -36,9 +36,9 @@ import com.firebase.client.Firebase;
 
 import java.util.HashSet;
 
-public class CustomAdapter extends ArrayAdapter<String>{
+public class PlacesCustomAdapter extends ArrayAdapter<String>{
     static Toast toast;
-    private static String TAG = "CustomAdapter";
+    private static String TAG = "PlacesCustomAdapter";
     SharedPreferences sharedPreferences;
     String[] strings = null;
     //        BroadcastReceiver[] removeReceivers;
@@ -47,7 +47,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
     ViewGroup p;
     Place place;
 
-    public CustomAdapter(Context context, String[] resource) {
+    public PlacesCustomAdapter(Context context, String[] resource) {
         super(context,R.layout.row,resource);
         this.context = context;
         this.strings = resource;
