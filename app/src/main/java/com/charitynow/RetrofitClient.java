@@ -31,6 +31,7 @@ public class RetrofitClient {
     private static final String TAG = RetrofitClient.class.getSimpleName();
     public JsonElement mPlaces;
     public ArrayList<JsonElement> mFlowArrayList;
+    public ArrayList<String> mPlaceStrings;
     public ArrayList<Pair<Float, Float>> mLocations;
 
     //creating a service for adapter with our GET class
@@ -45,11 +46,14 @@ public class RetrofitClient {
         super();
         mPlacesRestAdapter = new RestAdapter.Builder().setEndpoint(PlacesAPI).build();
         mLocations = new ArrayList<>();
+        mPlaceStrings = new ArrayList<>();
         mPlacesAPI = mPlacesRestAdapter.create(PlacesAPI.class);
 
         mTrafficRestAdapter = new RestAdapter.Builder().setEndpoint(TrafficAPI).build();
         mTrafficAPI = mTrafficRestAdapter.create(TrafficAPI.class);
         mFlowArrayList = new ArrayList<>();
+
+
     }
 
     public void getFlow(Context context){
@@ -95,6 +99,8 @@ public class RetrofitClient {
                     if(placesArray!=null) {
                         for (JsonElement item: placesArray) {
                             JsonObject itemObj = item.getAsJsonObject();
+                            String title = itemObj.get("title").getAsString();
+                            mPlaceStrings.add(title);
                             JsonArray posArray = itemObj.getAsJsonArray("position");
                             float lat = posArray.get(0).getAsFloat();
                             float lon = posArray.get(1).getAsFloat();
