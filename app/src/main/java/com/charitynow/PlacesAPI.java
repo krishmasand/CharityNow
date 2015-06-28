@@ -17,14 +17,16 @@ import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 
 interface PlacesAPI {
 
     final String token = "Token insert token here";
 
-    @GET("/discover/explore/")
-    JsonElement places(@Path("at") String at, @Path("cat") String cat, @Path("app_id") String app_id, @Path("app_code") String app_code);
+    @GET("/discover/explore")
+//    JsonElement places();
+    void places(@Query("at") String at, @Query("cat") String cat, @Query("app_id") String app_id, @Query("app_code") String app_code, Callback<JsonElement> response);
 
     @FormUrlEncoded
     @POST("/login/")

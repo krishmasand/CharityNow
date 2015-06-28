@@ -23,6 +23,7 @@ import javax.net.ssl.X509TrustManager;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class RetrofitClient {
     private static final String TAG = RetrofitClient.class.getSimpleName();
@@ -35,19 +36,34 @@ public class RetrofitClient {
 
     public void getPlaces(){
         disableSSLCertificateChecking();
-
-            try{
-                JsonElement places = mPlacesAPI.places("52.5159,13.3777", "sights-museums", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg");
-//                JsonElement places = mPlacesAPI.places();
+        Callback<JsonElement> response = new Callback<JsonElement>() {
+            @Override
+            public void success(JsonElement jsonElement, Response response) {
                 Log.d(TAG, "Retrieved places from server");
-                Log.d(TAG, places.toString());
-
+                Log.d(TAG, jsonElement.toString());
             }
-            catch(RetrofitError error) {
+
+            @Override
+            public void failure(RetrofitError error) {
                 Log.e(TAG, "Failed to retrieve places from server");
                 Log.e(TAG, error.toString());
                 Log.e(TAG, error.getKind().toString());
             }
+        };
+        mPlacesAPI.places("52.5159,13.3777", "sights-museums", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg", response);
+
+//            try{
+//                JsonElement places = mPlacesAPI.places("52.5159,13.3777", "sights-museums", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg");
+////                JsonElement places = mPlacesAPI.places();
+//                Log.d(TAG, "Retrieved places from server");
+//                Log.d(TAG, places.toString());
+//
+//            }
+//            catch(RetrofitError error) {
+//                Log.e(TAG, "Failed to retrieve places from server");
+//                Log.e(TAG, error.toString());
+//                Log.e(TAG, error.getKind().toString());
+//            }
 
 
     }
