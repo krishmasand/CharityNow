@@ -8,9 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 
 import java.util.Arrays;
+import java.util.Map;
 
 
 public class OrganizationListActivity extends AppCompatActivity {
@@ -28,12 +33,53 @@ public class OrganizationListActivity extends AppCompatActivity {
         //mRC.getPlaces(this);
         Firebase.setAndroidContext(this);
         Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
+        Log.d(TAG, firebase.toString());
+        Log.d(TAG, firebase.getRoot().toString());
+        Query queryRef = firebase.orderByChild("name");
+
+        queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                Map<String, Object> value = (Map<String, Object>) snapshot.getValue();
+                System.out.println(snapshot.getKey() + " was " + value.get("name"));
+                try {
+                    Data.companies.add(new Company(snapshot.getKey(), new Place((String) value.get("name"),
+                            Float.parseFloat(value.get("lat").toString()),
+                            Float.parseFloat(value.get("lon").toString()))));
+                }
+                catch(Exception e){}
+                setupLV();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+            // ....
+        });
+        queryRef.startAt();
 
     }
 
     public void setupLV(){
 
         String[] companiesStrings = new String[Data.companies.size()];
+        Log.d(TAG, Data.companies.size() + "");
         for(int i = 0; i < companiesStrings.length; i++){
             companiesStrings[i] = Data.companies.get(i).name;
         }
