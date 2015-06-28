@@ -1,6 +1,8 @@
 package com.charitynow;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +18,15 @@ import com.firebase.client.Firebase;
 public class ChooseActivity extends AppCompatActivity {
     RetrofitClient mRC;
     EditText mET;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
         mET = (EditText) findViewById(R.id.editText);
-       // Firebase.setAndroidContext(this);
+        if (!LoadValue("companyName").equals("")){
+            mET.setText(LoadValue("companyName"));
+        }
     }
 
     @Override
@@ -52,11 +57,24 @@ public class ChooseActivity extends AppCompatActivity {
         }
         else{
             Data.companyName = mET.getText().toString();
+            SetValue("companyName", mET.getText().toString());
             startActivity(new Intent(getApplicationContext(), PlacesListActivity.class));
         }
     }
 
     public void startUserActivity(View view){
         startActivity(new Intent(getApplicationContext(), OrganizationListActivity.class));
+    }
+
+    public void SetValue(String s, String s2){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(s, s2);
+        editor.commit();
+    }
+
+    public String LoadValue(String s){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPreferences.getString(s, "");
     }
 }
