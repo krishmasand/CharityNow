@@ -48,8 +48,6 @@ public class SendEmailASyncTask extends AsyncTask<Void, Void, Void> {
                     "\t<title></title>\n" +
                     "</head>\n" +
                     "<body>\n" +
-                    "<p>&lt;%body%&gt;</p>\n" +
-                    "\n" +
                     "<p><span class=\"sg-image\" style=\"float: none; display: block; text-align: center;\"><img height=\"212\" src=\"https://marketing-image-production.s3.amazonaws.com/uploads/440b0cbc44ef8bc79c39bf571942ed0c4ab59445ce98635c4dc8d21ba8e1bc15c3334fc0f038c1bd3f6fa535061f07d3e04bc05cf2983917712e1561d931ad7b.png\" width=\"1000\" /></span></p>\n" +
                     "\n" +
                     "<p style=\"text-align: center;\">&nbsp;</p>\n" +
