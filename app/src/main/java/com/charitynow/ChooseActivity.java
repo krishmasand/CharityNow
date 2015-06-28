@@ -18,9 +18,7 @@ public class ChooseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
-        mRC = new RetrofitClient();
-        mRC.getPlaces(this);
-        Firebase.setAndroidContext(this);
+       // Firebase.setAndroidContext(this);
     }
 
     @Override

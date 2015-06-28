@@ -60,7 +60,7 @@ public class RetrofitClient {
 
 
 
-    public void getFlow(Context context){
+    public void getFlow(final Context context){
         disableSSLCertificateChecking();
         Callback<JsonElement> response = new Callback<JsonElement>() {
             @Override
@@ -72,6 +72,9 @@ public class RetrofitClient {
                         Data.places.add(new Place(mPlaceStrings.get(i), mLocations.get(i).first, mLocations.get(i).second));
                         Log.d(TAG, Data.places.get(i).name);
                     }
+
+                    PlacesListActivity PLA = (PlacesListActivity) context;
+                    PLA.setupLV();
 
                     Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
                     firebase.child("checkedInPlace").setValue(Data.places.get(0));

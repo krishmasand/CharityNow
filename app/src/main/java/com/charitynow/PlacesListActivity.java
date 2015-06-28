@@ -1,17 +1,61 @@
 package com.charitynow;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.firebase.client.Firebase;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 
 public class PlacesListActivity extends ActionBarActivity {
+    CustomAdapter adapter;
+    ListView lv;
+    RetrofitClient mRC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places_list);
+        lv = (ListView) findViewById(R.id.listView);
+        mRC = new RetrofitClient();
+        mRC.getPlaces(this);
+        Firebase.setAndroidContext(this);
+
+
+
+    }
+
+    public void setupLV(){
+        
+        String[] placesStrings = new String[Data.places.size()];
+        for(int i = 0; i < placesStrings.length; i++){
+            placesStrings[i] = Data.places.get(i).name;
+        }
+
+//        if(placesStrings.length <= 0){
+//            title = (TextView) findViewById(R.id.textView);
+//            if(bluetoothAdapter == null) title.setText("Bluetooth is not available");
+//            else if(!bluetoothAdapter.isEnabled()) title.setText("Bluetooth is not enabled");
+//            else title.setText("No Bluetooth Devices Found");
+//        }
+//        else{
+//            title = (TextView) findViewById(R.id.textView);
+//            title.setText("Devices");
+//        }
+        Arrays.sort(placesStrings);
+        adapter = new CustomAdapter(this, placesStrings);
+        lv.setAdapter(adapter);
     }
 
     @Override
