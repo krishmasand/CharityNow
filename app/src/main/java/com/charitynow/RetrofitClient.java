@@ -30,7 +30,7 @@ public class RetrofitClient {
 
     private static final String TAG = RetrofitClient.class.getSimpleName();
     public JsonElement mPlaces;
-    public JsonElement mFlow;
+    public ArrayList<JsonElement> mFlowArrayList;
     public ArrayList<Pair<Float, Float>> mLocations;
 
     //creating a service for adapter with our GET class
@@ -49,6 +49,7 @@ public class RetrofitClient {
 
         mTrafficRestAdapter = new RestAdapter.Builder().setEndpoint(TrafficAPI).build();
         mTrafficAPI = mTrafficRestAdapter.create(TrafficAPI.class);
+        mFlowArrayList = new ArrayList<>();
     }
 
     public void getFlow(Context context){
@@ -56,9 +57,13 @@ public class RetrofitClient {
         Callback<JsonElement> response = new Callback<JsonElement>() {
             @Override
             public void success(JsonElement jsonElement, Response response) {
-                Log.d(TAG, "Retrieved flow from server");
-                mFlow = jsonElement;
-                Log.d(TAG, mFlow.toString());
+                mFlowArrayList.add(jsonElement);
+                if(mFlowArrayList.size() == mLocations.size())
+                {
+                    for(JsonElement jsonElement1 : mFlowArrayList){
+                        Log.d(TAG, jsonElement1.toString());
+                    }
+                }
             }
 
             @Override
@@ -69,7 +74,9 @@ public class RetrofitClient {
                 Log.e(TAG, error.getBody().toString());
             }
         };
-        mTrafficAPI.flow("41.8897,-87.6369,100", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg", response);
+        for(Pair pair : mLocations){
+            mTrafficAPI.flow(pair.first+","+pair.second+",100", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg", response);
+        }
 
 
     }
