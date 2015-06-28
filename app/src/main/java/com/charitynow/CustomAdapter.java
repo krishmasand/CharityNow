@@ -6,6 +6,7 @@ package com.charitynow;
  */
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -62,6 +63,12 @@ public class CustomAdapter extends ArrayAdapter<String>{
         View.OnClickListener pressed= new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.place_dialog);
+
+                dialog.setCancelable(true);
+                dialog.setTitle(strings[position]);
+                dialog.show();
 
             }
         };
