@@ -35,6 +35,7 @@ public class RetrofitClient {
     public ArrayList<JsonElement> mFlowArrayList;
     public ArrayList<String> mPlaceStrings;
     public ArrayList<Pair<Float, Float>> mLocations;
+    public ArrayList<Integer> mTrafficScores;
 
     //creating a service for adapter with our GET class
     String PlacesAPI = "https://places.demo.api.here.com/places/v1";
@@ -55,6 +56,8 @@ public class RetrofitClient {
         mTrafficAPI = mTrafficRestAdapter.create(TrafficAPI.class);
         mFlowArrayList = new ArrayList<>();
 
+        mTrafficScores = new ArrayList<>();
+
 
     }
 
@@ -66,6 +69,9 @@ public class RetrofitClient {
             @Override
             public void success(JsonElement jsonElement, Response response) {
                 mFlowArrayList.add(jsonElement);
+                int trafficScore = jsonElement.getAsJsonObject().get("RWS").getAsJsonArray().get(0).getAsJsonObject().get("RW").getAsJsonArray().get(0)
+                        .getAsJsonObject().get("FIS").getAsJsonArray().get(0).getAsJsonObject().get("FI").getAsJsonArray().get(0).getAsJsonObject()
+                        .get("TMC").getAsJsonObject().get("PC").getAsInt();
                 if(mFlowArrayList.size() == mLocations.size())
                 {
                     for(int i = 0; i < mPlaceStrings.size(); i++){
