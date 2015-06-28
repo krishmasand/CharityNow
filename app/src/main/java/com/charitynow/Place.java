@@ -14,4 +14,11 @@ public class Place {
         lat = l2;
     }
 
+    public Place(Place otherPlace)
+    {
+        this.name = otherPlace.name;
+        this.lon = otherPlace.lon;
+        this.lat = otherPlace.lat;
+    }
+
 }
