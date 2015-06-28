@@ -1,17 +1,21 @@
 package com.charitynow;
 
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Array;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -26,21 +30,53 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class RetrofitClient {
+
     private static final String TAG = RetrofitClient.class.getSimpleName();
+    public JsonElement mPlaces;
+    public ArrayList<Pair<Float, Float>> mLocations;
 
     //creating a service for adapter with our GET class
     String PlacesAPI = "https://places.demo.api.here.com/places/v1";
     public static String token = "Token AJKnXv84fjrb0KIHawS0Tg";
-    RestAdapter mRestAdapter = new RestAdapter.Builder().setEndpoint(PlacesAPI).build();
-    PlacesAPI mPlacesAPI = mRestAdapter.create(PlacesAPI.class);
+    RestAdapter mRestAdapter;
+    PlacesAPI mPlacesAPI;
 
-    public void getPlaces(){
+    public RetrofitClient(){
+        super();
+        mRestAdapter = new RestAdapter.Builder().setEndpoint(PlacesAPI).build();
+        mLocations = new ArrayList<>();
+        mPlacesAPI = mRestAdapter.create(PlacesAPI.class);
+    }
+
+    public void getPlaces(Context context){
         disableSSLCertificateChecking();
         Callback<JsonElement> response = new Callback<JsonElement>() {
             @Override
             public void success(JsonElement jsonElement, Response response) {
                 Log.d(TAG, "Retrieved places from server");
+                mPlaces = jsonElement;
                 Log.d(TAG, jsonElement.toString());
+                if(mPlaces!=null){
+                    JsonObject placesObject = mPlaces.getAsJsonObject();
+                    JsonObject results = placesObject.getAsJsonObject("results");
+                    Log.d(TAG, results.toString());
+                    JsonArray placesArray = results.getAsJsonArray("items");
+                    if(placesArray!=null) {
+                        for (JsonElement item: placesArray) {
+                            JsonObject itemObj = item.getAsJsonObject();
+                            JsonArray posArray = itemObj.getAsJsonArray("position");
+                            Log.d(TAG, posArray.toString());
+                            float lat = posArray.get(0).getAsFloat();
+                            float lon = posArray.get(1).getAsFloat();
+                            mLocations.add(new Pair(lat, lon));
+
+                        }
+                    }
+                    for(Pair pair : mLocations){
+                        Log.d(TAG, pair.first.toString() + "," + pair.second.toString());
+                    }
+
+                }
             }
 
             @Override
@@ -51,6 +87,7 @@ public class RetrofitClient {
             }
         };
         mPlacesAPI.places("52.5159,13.3777", "sights-museums", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg", response);
+
 
 //            try{
 //                JsonElement places = mPlacesAPI.places("52.5159,13.3777", "sights-museums", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg");
