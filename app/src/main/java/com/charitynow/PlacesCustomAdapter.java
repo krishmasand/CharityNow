@@ -90,6 +90,7 @@ public class PlacesCustomAdapter extends ArrayAdapter<String>{
                         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                         mapIntent.setPackage("com.google.android.apps.maps");
                         context.startActivity(mapIntent);
+                        dialog.cancel();
                     }
                 });
                 Button checkInButton = (Button) dialog.findViewById(R.id.button4);

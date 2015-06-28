@@ -46,7 +46,7 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
     String currentString;
     Context context;
     ViewGroup p;
-    Place place;
+    Company company;
 
     public OrganizationCustomAdapter(Context context, String[] resource, String[] subtexts) {
         super(context,R.layout.row,resource);
@@ -75,16 +75,23 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
             public void onClick(View v) {
 
                 final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.place_dialog);
+                dialog.setContentView(R.layout.company_dialog);
 
                 dialog.setCancelable(true);
                 dialog.setTitle(strings[position]);
-                place = Data.places.get(position);
+                company = Data.companies.get(position);
                 Button dirButton = (Button) dialog.findViewById(R.id.button3);
                 dirButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+//                        Uri gmmIntentUri = Uri.parse("google.navigation:q="+place.lat+","+place.lon);
+                        Uri gmmIntentUri = Uri.parse("google.navigation:q="+subtexts[position]);
+                        //Uri gmmIntentUri = Uri.parse("google.navigation:q="+Data.places.get(position).name);
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        context.startActivity(mapIntent);
+                        dialog.cancel();
                     }
                 });
                 Button checkInButton = (Button) dialog.findViewById(R.id.button4);
@@ -111,7 +118,7 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
         name.setText(strings[position]);
         currentString = strings[position];
 
-        iv.setImageResource(R.mipmap.sleeping);
+        iv.setImageResource(R.mipmap.thumbsup);
         sub.setText(subtexts[position]);
         relativeLayout.setBackgroundColor(Color.WHITE);
         name.setTextColor(Color.BLACK);
