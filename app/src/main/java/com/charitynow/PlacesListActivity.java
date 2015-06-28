@@ -1,5 +1,6 @@
 package com.charitynow;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,7 +16,7 @@ import java.util.Comparator;
 
 
 
-public class PlacesListActivity extends ActionBarActivity {
+public class PlacesListActivity extends Activity {
     PlacesCustomAdapter adapter;
     ListView lv;
     RetrofitClient mRC;

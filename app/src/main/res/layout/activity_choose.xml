@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText"
         android:hint="Company Name"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@+id/button2"
         android:layout_marginTop="52dp" />

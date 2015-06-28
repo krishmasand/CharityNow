@@ -1,5 +1,6 @@
 package com.charitynow;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,19 +17,22 @@ import com.firebase.client.Query;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
-public class OrganizationListActivity extends AppCompatActivity {
+public class OrganizationListActivity extends Activity {
     private static String TAG = "OrganizationListActivity";
     OrganizationCustomAdapter adapter;
     ListView lv;
     RetrofitClient mRC;
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        Data.companies = new ArrayList<>();
+        Data.companies = new HashSet<>();
         lv = (ListView) findViewById(R.id.listView2);
         mRC = new RetrofitClient();
         //mRC.getPlaces(this);
@@ -101,19 +105,12 @@ public class OrganizationListActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 Map<String, Object> value = (Map<String, Object>) snapshot.getValue();
-                boolean add = true;
                 try {
                     Company newComp = new Company(snapshot.getKey(), new Place((String) value.get("name"),
                             Float.parseFloat(value.get("lat").toString()),
                             Float.parseFloat(value.get("lon").toString()),
                             Integer.parseInt(value.get("trafficScore").toString())));
-                    for(Company c : Data.companies){
-                        if (c.name.equals(newComp.name)){
-                            add = false;
-                            break;
-                        }
-                    }
-                    if(add) Data.companies.add(newComp);
+                    Data.companies.add(newComp);
                 }
                 catch(Exception e){}
                 setupLV();
@@ -145,19 +142,22 @@ public class OrganizationListActivity extends AppCompatActivity {
     }
 
     public void setupLV(){
-
-        String[] companiesStrings = new String[Data.companies.size()];
-        Log.d(TAG, Data.companies.size() + "");
+        Data.companiesArrayList = new ArrayList<>();
+        for(Company c : Data.companies){
+            Data.companiesArrayList.add(c);
+        }
+        String[] companiesStrings = new String[Data.companiesArrayList.size()];
+        Log.d(TAG, Data.companiesArrayList.size() + "");
         for(int i = 0; i < companiesStrings.length; i++){
-            companiesStrings[i] = Data.companies.get(i).name;
+            companiesStrings[i] = Data.companiesArrayList.get(i).name;
         }
         String[] locationStrings = new String[Data.companies.size()];
         for(int i = 0; i < companiesStrings.length; i++){
-            locationStrings[i] = Data.companies.get(i).checkedInPlace.name;
+            locationStrings[i] = Data.companiesArrayList.get(i).checkedInPlace.name;
         }
 
 
-        Arrays.sort(companiesStrings);
+        //Arrays.sort(companiesStrings);
         adapter = new OrganizationCustomAdapter(this, companiesStrings, locationStrings);
         lv.setAdapter(adapter);
     }

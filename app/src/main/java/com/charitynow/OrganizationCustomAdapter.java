@@ -79,7 +79,7 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
 
                 dialog.setCancelable(true);
                 dialog.setTitle(strings[position]);
-                company = Data.companies.get(position);
+                company = Data.companiesArrayList.get(position);
                 Button dirButton = (Button) dialog.findViewById(R.id.button3);
                 dirButton.setOnClickListener(new View.OnClickListener() {
                     @Override
