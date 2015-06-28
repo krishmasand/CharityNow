@@ -83,9 +83,14 @@ public class OrganizationListActivity extends AppCompatActivity {
         for(int i = 0; i < companiesStrings.length; i++){
             companiesStrings[i] = Data.companies.get(i).name;
         }
+        String[] locationStrings = new String[Data.companies.size()];
+        for(int i = 0; i < companiesStrings.length; i++){
+            locationStrings[i] = Data.companies.get(i).checkedInPlace.name;
+        }
+
 
         Arrays.sort(companiesStrings);
-        adapter = new OrganizationCustomAdapter(this, companiesStrings);
+        adapter = new OrganizationCustomAdapter(this, companiesStrings, locationStrings);
         lv.setAdapter(adapter);
     }
 

@@ -42,15 +42,17 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
     SharedPreferences sharedPreferences;
     String[] strings = null;
     //        BroadcastReceiver[] removeReceivers;
+    String[] subtexts = null;
     String currentString;
     Context context;
     ViewGroup p;
     Place place;
 
-    public OrganizationCustomAdapter(Context context, String[] resource) {
+    public OrganizationCustomAdapter(Context context, String[] resource, String[] subtexts) {
         super(context,R.layout.row,resource);
         this.context = context;
         this.strings = resource;
+        this.subtexts = subtexts;
 //            removeReceivers = new BroadcastReceiver[resource.length];
         //unregister();
     }
@@ -110,7 +112,7 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
         currentString = strings[position];
 
         iv.setImageResource(R.mipmap.sleeping);
-        sub.setText("Not Monitoring");
+        sub.setText(subtexts[position]);
         relativeLayout.setBackgroundColor(Color.WHITE);
         name.setTextColor(Color.BLACK);
         sub.setTextColor(Color.BLACK);
