@@ -17,11 +17,14 @@ import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 
 interface TrafficAPI {
 
-    final String token = "Token insert token here";
+
+    @GET("/flow.json")
+    void flow(@Query("prox") String prox, @Query("app_id") String app_id, @Query("app_code") String app_code, Callback<JsonElement> response);
 
     @FormUrlEncoded
     @POST("/login/")
