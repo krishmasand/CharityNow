@@ -86,21 +86,7 @@ public class RetrofitClient {
                 Log.e(TAG, error.getKind().toString());
             }
         };
-        mPlacesAPI.places("52.5159,13.3777", "sights-museums", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg", response);
-
-
-//            try{
-//                JsonElement places = mPlacesAPI.places("52.5159,13.3777", "sights-museums", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg");
-////                JsonElement places = mPlacesAPI.places();
-//                Log.d(TAG, "Retrieved places from server");
-//                Log.d(TAG, places.toString());
-//
-//            }
-//            catch(RetrofitError error) {
-//                Log.e(TAG, "Failed to retrieve places from server");
-//                Log.e(TAG, error.toString());
-//                Log.e(TAG, error.getKind().toString());
-//            }
+        mPlacesAPI.places("41.8897,-87.6369", "atm-bank-exchange,coffee-tea,going-out,sights-museums,shopping,toilet-rest-area", "DemoAppId01082013GAL", "AJKnXv84fjrb0KIHawS0Tg", response);
 
 
     }
