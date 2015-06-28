@@ -23,10 +23,12 @@ public class SendEmailASyncTask extends AsyncTask<Void, Void, Void> {
     public Context context;
     private String msgResponse;
     private String amount;
+    private String name;
 
-    public SendEmailASyncTask(Context context, String amount) {
+    public SendEmailASyncTask(Context context, String amount, String name) {
         this.context = context;
         this.amount = amount;
+        this.name = name;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class SendEmailASyncTask extends AsyncTask<Void, Void, Void> {
             email.addTo(new String[]{"krishmasand@gmail.com", "Radduby@gmail.com"});
             email.setCc(new String[]{"Radduby@gmail.com"});
             email.setFrom("Radduby@gmail.com");
-            email.setSubject("Donate to MalariaNoMore!");
+            email.setSubject("Donate to "+name+"!");
             email.setHtml("<html>\n" +
                     "<head>\n" +
                     "\t<title></title>\n" +

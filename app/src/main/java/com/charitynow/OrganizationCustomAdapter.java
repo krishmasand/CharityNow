@@ -105,7 +105,7 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
                     public void onClick(View v) {
                         String amount = "5";
                         if(eT.getText().toString()!="") amount = eT.getText().toString();
-                        SendEmailASyncTask aSyncTask = new SendEmailASyncTask(context, amount);
+                        SendEmailASyncTask aSyncTask = new SendEmailASyncTask(context, amount, strings[position]);
                         aSyncTask.execute();
                         dialog.cancel();
                     }
