@@ -21,11 +21,11 @@
         </activity>
         <activity
             android:name=".PlacesListActivity"
-            android:label="@string/title_activity_places_list" >
+            android:label="Popular Places" >
         </activity>
         <activity
             android:name=".OrganizationListActivity"
-            android:label="@string/title_activity_organization_list" >
+            android:label="Nearby Charities" >
         </activity>
     </application>
 
