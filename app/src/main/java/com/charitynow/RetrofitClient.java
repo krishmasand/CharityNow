@@ -64,9 +64,15 @@ public class RetrofitClient {
                 mFlowArrayList.add(jsonElement);
                 if(mFlowArrayList.size() == mLocations.size())
                 {
-                    for(JsonElement jsonElement1 : mFlowArrayList){
-                        Log.d(TAG, jsonElement1.toString());
+                    for(int i = 0; i < mPlaceStrings.size(); i++){
+                        Data.places.add(new Place(mPlaceStrings.get(i), mLocations.get(i).first, mLocations.get(i).second));
+                        Log.d(TAG, Data.places.get(i).name);
                     }
+
+//                    for(JsonElement jsonElement1 : mFlowArrayList){
+//                        Log.d(TAG, jsonElement1.toString());
+//                    }
+
                 }
             }
 
@@ -107,9 +113,6 @@ public class RetrofitClient {
                             mLocations.add(new Pair(lat, lon));
 
                         }
-                    }
-                    for(Pair pair : mLocations){
-                        Log.d(TAG, pair.first.toString() + "," + pair.second.toString());
                     }
 
                 }
