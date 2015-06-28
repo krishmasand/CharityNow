@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.firebase.client.Firebase;
+
 
 public class ChooseActivity extends AppCompatActivity {
     RetrofitClient mRC;
@@ -18,6 +20,7 @@ public class ChooseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose);
         mRC = new RetrofitClient();
         mRC.getPlaces();
+        Firebase.setAndroidContext(this);
     }
 
     @Override
