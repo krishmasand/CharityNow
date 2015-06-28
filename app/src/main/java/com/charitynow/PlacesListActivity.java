@@ -1,10 +1,15 @@
 package com.charitynow;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.firebase.client.Firebase;
@@ -21,6 +26,14 @@ public class PlacesListActivity extends Activity {
     ListView lv;
     RetrofitClient mRC;
 
+    @TargetApi(21)
+    public void setStatusBar(){
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.parseColor("#303F9F")); //slightly darker than action bar
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +42,7 @@ public class PlacesListActivity extends Activity {
         mRC = new RetrofitClient();
         mRC.getPlaces(this);
         Firebase.setAndroidContext(this);
+        if (Build.VERSION.SDK_INT >= 21) setStatusBar();
 
 
 
