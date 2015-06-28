@@ -33,6 +33,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.sendgrid.SendGridException;
+
+import org.json.JSONException;
 
 import java.util.HashSet;
 
@@ -98,7 +101,8 @@ public class OrganizationCustomAdapter extends ArrayAdapter<String>{
                 checkInButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        SendEmailASyncTask aSyncTask = new SendEmailASyncTask(context);
+                        aSyncTask.execute();
                         dialog.cancel();
                     }
                 });
