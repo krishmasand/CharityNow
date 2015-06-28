@@ -76,8 +76,9 @@ public class RetrofitClient {
                     PlacesListActivity PLA = (PlacesListActivity) context;
                     PLA.setupLV();
 
-                    Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
-                    firebase.child("checkedInPlace").setValue(Data.places.get(0));
+//                    Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
+//                    firebase.child("checkedInPlace").setValue(Data.places.get(0));
+//                    firebase.child(Data.companyName).setValue(Data.places.get(0));
 //                    for(JsonElement jsonElement1 : mFlowArrayList){
 //                        Log.d(TAG, jsonElement1.toString());
 //                    }

@@ -72,6 +72,7 @@ public class PlacesCustomAdapter extends ArrayAdapter<String>{
             @Override
             public void onClick(View v) {
 
+
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.place_dialog);
 
@@ -95,8 +96,14 @@ public class PlacesCustomAdapter extends ArrayAdapter<String>{
                 checkInButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        for(Place pl : Data.places){
+                            if(pl.name.equals(strings[position])){
+                                place = pl;
+                                break;
+                            }
+                        }
                         Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
-                        firebase.child("checkedInPlace").setValue(Data.places.get(position));
+                        firebase.child(Data.companyName).setValue(place);
                         dialog.cancel();
                     }
                 });

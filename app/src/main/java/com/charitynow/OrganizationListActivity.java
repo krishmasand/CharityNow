@@ -3,6 +3,7 @@ package com.charitynow;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 
 
 public class OrganizationListActivity extends AppCompatActivity {
+    private static String TAG = "OrganizationListActivity";
     OrganizationCustomAdapter adapter;
     ListView lv;
     RetrofitClient mRC;
@@ -25,6 +27,8 @@ public class OrganizationListActivity extends AppCompatActivity {
         mRC = new RetrofitClient();
         //mRC.getPlaces(this);
         Firebase.setAndroidContext(this);
+        Firebase firebase = new Firebase("https://brilliant-torch-3400.firebaseio.com/");
+
     }
 
     public void setupLV(){
