@@ -55,17 +55,14 @@ public class RetrofitClient {
             public void success(JsonElement jsonElement, Response response) {
                 Log.d(TAG, "Retrieved places from server");
                 mPlaces = jsonElement;
-                Log.d(TAG, jsonElement.toString());
                 if(mPlaces!=null){
                     JsonObject placesObject = mPlaces.getAsJsonObject();
                     JsonObject results = placesObject.getAsJsonObject("results");
-                    Log.d(TAG, results.toString());
                     JsonArray placesArray = results.getAsJsonArray("items");
                     if(placesArray!=null) {
                         for (JsonElement item: placesArray) {
                             JsonObject itemObj = item.getAsJsonObject();
                             JsonArray posArray = itemObj.getAsJsonArray("position");
-                            Log.d(TAG, posArray.toString());
                             float lat = posArray.get(0).getAsFloat();
                             float lon = posArray.get(1).getAsFloat();
                             mLocations.add(new Pair(lat, lon));
